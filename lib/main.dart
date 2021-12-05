@@ -1,0 +1,32 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_hive/screens/students_list.dart';
+import 'package:flutter_hive/student.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as pathProvide;
+
+import 'screens/barchart.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Directory directory = await pathProvide.getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+  Hive.registerAdapter(StudentAdapter());
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      home: StudentListScreen(),
+    );
+  }
+}
+
